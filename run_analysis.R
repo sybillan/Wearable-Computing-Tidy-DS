@@ -1,7 +1,7 @@
 library(reshape2)
 library(plyr)
 
-# unzipping archive
+# unzipping archive files in Downloads folder
 setwd("C:/Users/admin/Downloads/")  
 if (!file.exists("UCI HAR Dataset")) { 
   unzip(filename) 
@@ -14,28 +14,29 @@ features <- read.table("UCI HAR Dataset/features.txt", col.names=c("index","feat
 activityLabels$activity <- as.character(activityLabels$activity)
 features$featurelabels <- as.character(features$featurelabels)
 
-#Reading subject ids
+#Reading subject ids for test and train
 subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt", col.names=c("Subject"))
 subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt", col.names=c("Subject"))
-#Combine train and test sets into single data frame
+#Combine subjects in train and test sets into single data frame
 subject_all <- rbind(subject_train, subject_test)
 
-#Read in features data for train and test. 
+#Read in features data for test and train. 
 features_test <- read.table("UCI HAR Dataset/test/X_test.txt")
 features_train <- read.table("UCI HAR Dataset/train/X_train.txt")
 #Combine training and test data for features into single data frame
 features_all <- rbind(features_test, features_train)
 
-#Read in features labels for mean and std alone
+#Read in features labels for mean and std alone using grep for indexing
 meanstd<- grep(".*mean.*|.*std.*", features$featurelabels)
 index.names <- features[meanstd,2]
+#Verifying extraction of mean and std labels
 index.names
-
+#Subsetting feature values to mean() and std() labels
 colnames(features_all)<-features$featurelabels
 featuresubset<-features_all[,index.names]
 
 
-#Read in activity data for train and test. 
+#Read in activity data for test and train. 
 activity_test <- read.table("UCI HAR Dataset/test/Y_test.txt")
 activity_train <- read.table("UCI HAR Dataset/train/Y_train.txt")
 #Combine training and test data for features into single data frame
