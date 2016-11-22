@@ -163,4 +163,12 @@ activity
 mean(): Mean value
 std(): Standard deviation
 meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+
 Note the 'f' to indicate frequency domain signals. These signals were used to estimate variables of the feature vector for each pattern:   '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+#Transformations:
+--Read data files using read.table
+--Change the activity and features files (column 2) into a character class 
+--RowBind the x and y data frames, subject files and filter columns using the grep index for features file
+--ColumnBind subject, activity and data into one data frames
+--Use functions melt and dcast to reshape the final data.
